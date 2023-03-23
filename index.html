@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lama Pagination</title>
+    <link rel="stylesheet" href="lama-pagination.min.css" />
+  </head>
+
+  <body>
+    <div id="main"></div>
+    <div id="lama-pagination" class="lama-pagenumbers"></div>
+    <script type="module">
+      import { LamaPagination } from "./lama-pagination.js";
+      let arr = Array.from(Array(100), (_, index) => index + 1);
+      let pagination = new LamaPagination({
+        paginationSize: 7,
+        limitPerPage: 14,
+        itemCount: arr.length,
+        prev: "Trước",
+        next: "Sau",
+      });
+      pagination.setupPagination(1, function (currentPage, limitPerPage) {
+        let start = (currentPage - 1) * limitPerPage;
+        let end =
+          start + limitPerPage > arr.length ? arr.length : start + limitPerPage;
+        let contentHTML = "";
+        for (let i = start; i < end; i++) {
+          contentHTML += `<div style="border: 1px solid black; text-align: center">${arr[i]}</div>`;
+        }
+        document.getElementById("main").innerHTML = contentHTML;
+      });
+
+      /* let prev = `<li class="lama-page-item lama-previous-page${
+      currentPage == 1 ? " lama-disable" : ""
+      }"${
+        currentPage == 1 ? "" : ` onclick="setupPagination(${currentPage - 1})"`
+      }><a class="lama-page-link">Prev</a></li>`;
+      paginationEl.innerHTML += prev; */
+
+      /* let page = `<li class="lama-page-item${
+        arr[i] == "..." ? " lama-dots" : " lama-current-page"
+      }${arr[i] == currentPage ? " lama-active" : ""}"${
+        arr[i] == "..." ? "" : ` onclick="setupPagination(${arr[i]})"`
+      }><a class="lama-page-link">${arr[i]}</a></li>`;
+      paginationEl.innerHTML += page; */
+
+      /* let next = `<li class="lama-page-item lama-next-page${
+        currentPage == totalPages ? " lama-disable" : ""
+      }"${
+        currentPage == totalPages
+          ? ""
+          : ` onclick="setupPagination(${currentPage + 1})"`
+      }><a class="lama-page-link">Next</a></li>`;
+      paginationEl.innerHTML += next; */
+    </script>
+  </body>
+</html>
